@@ -12,7 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 data class AttendanceUiState(
     val sessionTitle: String = "",
     val checkedInCount: Int = 0,
@@ -66,4 +69,20 @@ private fun AttendanceScreenCheckedInPreview() {
             )
         }
     }
+}
+@Composable
+fun AttendanceRoute() {
+    var uiState by remember {
+        mutableStateOf(AttendanceUiState("CSC 402 - Week 4", 12))
+    }
+
+    AttendanceScreen(
+        uiState = uiState,
+        onCheckIn = {
+            uiState = uiState.copy(
+                checkedInCount = uiState.checkedInCount + 1,
+                isCheckedIn = true
+            )
+        }
+    )
 }
