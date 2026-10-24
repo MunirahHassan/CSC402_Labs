@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import sa.edu.iau.cshj.studyplanner.ui.PlannerHomeRoute
+import sa.edu.iau.cshj.studyplanner.ui.StudyPlannerApp
 import sa.edu.iau.cshj.studyplanner.ui.theme.StudyPlannerTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
             StudyPlannerTheme {
                     setContent {
                         StudyPlannerTheme {
-                            PlannerHomeRoute()
+                            StudyPlannerApp()
                         }
                     }
                 }

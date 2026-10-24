@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import sa.edu.iau.cshj.studyplanner.ui.theme.StudyPlannerTheme
-
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 data class TaskDetailUiState(
     val title: String = ""
 )
@@ -62,4 +63,20 @@ private fun TaskDetailScreenLabPreview() {
             onBackClick = {}
         )
     }
+}
+@Composable
+fun TaskDetailRoute(title: String, onBackClick: () -> Unit) {
+    val context = LocalContext.current
+
+    TaskDetailScreen(
+        uiState = TaskDetailUiState(title = title),
+        onShareClick = {
+            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                putExtra(Intent.EXTRA_TEXT, "Today I'm studying: $title")
+                type = "text/plain"
+            }
+            context.startActivity(Intent.createChooser(sendIntent, "Share via"))
+        },
+        onBackClick = onBackClick
+    )
 }
