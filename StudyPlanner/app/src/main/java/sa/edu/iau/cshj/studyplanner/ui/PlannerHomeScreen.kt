@@ -7,7 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import sa.edu.iau.cshj.studyplanner.ui.theme.StudyPlannerTheme
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 data class PlannerUiState(
     val greeting: String = "Hello, Munirah",
     val totalTasks: Int = 7,
@@ -61,4 +64,17 @@ private fun PlannerHomeScreenEverythingDonePreview() {
             onAddTaskClick = {}
         )
     }
+}
+@Composable
+fun PlannerHomeRoute() {
+    var uiState by remember { mutableStateOf(PlannerUiState()) }
+
+    PlannerHomeScreen(
+        uiState = uiState,
+        onAddTaskClick = {
+            uiState = uiState.copy(
+                completedTasks = uiState.completedTasks + 1
+            )
+        }
+    )
 }
