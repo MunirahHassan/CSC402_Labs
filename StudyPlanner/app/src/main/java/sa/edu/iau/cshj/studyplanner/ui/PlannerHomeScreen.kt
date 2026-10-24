@@ -14,13 +14,15 @@ import androidx.compose.runtime.remember
 data class PlannerUiState(
     val greeting: String = "Hello, Munirah",
     val totalTasks: Int = 7,
-    val completedTasks: Int = 0
+    val completedTasks: Int = 0,
+    val tasks: List<String> = emptyList()
 )
 
 @Composable
 fun PlannerHomeScreen(
     uiState: PlannerUiState,
     onAddTaskClick: () -> Unit,
+    onTaskClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -41,6 +43,12 @@ fun PlannerHomeScreen(
         Button(onClick = onAddTaskClick) {
             Text("Add New Task")
         }
+
+        uiState.tasks.forEach { task ->
+            Button(onClick = { onTaskClick(task) }) {
+                Text(task)
+            }
+        }
     }
 }
 
@@ -50,7 +58,8 @@ private fun PlannerHomeScreenNothingDonePreview() {
     StudyPlannerTheme {
         PlannerHomeScreen(
             uiState = PlannerUiState(completedTasks = 0, totalTasks = 7),
-            onAddTaskClick = {}
+            onAddTaskClick = {},
+            onTaskClick = {}
         )
     }
 }
@@ -61,13 +70,20 @@ private fun PlannerHomeScreenEverythingDonePreview() {
     StudyPlannerTheme {
         PlannerHomeScreen(
             uiState = PlannerUiState(completedTasks = 7, totalTasks = 7),
-            onAddTaskClick = {}
+            onAddTaskClick = {},
+                    onTaskClick = {}
         )
     }
 }
 @Composable
-fun PlannerHomeRoute() {
-    var uiState by remember { mutableStateOf(PlannerUiState()) }
+fun PlannerHomeRoute(onTaskClick: (String) -> Unit) {
+    var uiState by remember {
+        mutableStateOf(
+            PlannerUiState(
+                tasks = listOf("Lab 5 report", "Math assignment", "Read chapter 4")
+            )
+        )
+    }
 
     PlannerHomeScreen(
         uiState = uiState,
@@ -75,6 +91,7 @@ fun PlannerHomeRoute() {
             uiState = uiState.copy(
                 completedTasks = uiState.completedTasks + 1
             )
-        }
+        },
+        onTaskClick = onTaskClick
     )
 }
