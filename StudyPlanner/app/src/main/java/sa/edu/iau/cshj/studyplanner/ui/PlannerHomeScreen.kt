@@ -10,6 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+import sa.edu.iau.cshj.studyplanner.ui.StudyTask
+
+data class PlannerUiState(val tasks: List<StudyTask> = emptyList())
+
 @Composable
 fun PlannerHomeScreen(
     uiState: PlannerUiState,

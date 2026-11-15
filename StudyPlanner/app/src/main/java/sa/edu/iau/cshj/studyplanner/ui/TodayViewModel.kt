@@ -3,7 +3,6 @@ package sa.edu.iau.cshj.studyplanner.ui
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.copy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,9 +11,7 @@ import kotlinx.coroutines.launch
 import sa.edu.iau.cshj.studyplanner.StudyDatabase
 import sa.edu.iau.cshj.studyplanner.TaskRepository
 
-
-class TodayViewModel(application: Application) :
-    AndroidViewModel(application) {
+class TodayViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = TaskRepository(
         StudyDatabase.getDatabase(application).studyTaskDao()
     )
