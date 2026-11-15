@@ -15,8 +15,8 @@ fun StudyPlannerApp() {
     NavHost(navController = navController, startDestination = PlannerHome) {
         composable<PlannerHome> {
             PlannerHomeRoute(
-                onTaskClick = { taskTitle ->
-                    navController.navigate(TaskDetail(title = taskTitle))
+                onNavigateToTask = { taskId ->
+                    navController.navigate(route = TaskDetail(title = taskId.toString()))
                 }
             )
         }
