@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import sa.edu.iau.cshj.studyplanner.ReminderWorker
 import sa.edu.iau.cshj.studyplanner.StudyDatabase
 import sa.edu.iau.cshj.studyplanner.TaskRepository
 
@@ -42,7 +43,15 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
             if (done) _uiState.update { it.copy(message = "Marked as done") }
         }
     }
-
+    fun onRemindMe() {
+        val request = androidx.work.OneTimeWorkRequestBuilder<ReminderWorker>()
+            .setInitialDelay(10, java.util.concurrent.TimeUnit.SECONDS)
+            .build()
+        androidx.work.WorkManager.getInstance(getApplication()).enqueue(request)
+        _uiState.update {
+            it.copy(message = "Reminder in 10 seconds. Close the app!")
+        }
+    }
     fun onMessageShown() {
         _uiState.update { it.copy(message = null) }
     }
